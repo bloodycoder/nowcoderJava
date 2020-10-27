@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.test.context.ContextConfiguration;
 
+import javax.annotation.security.RunAs;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
