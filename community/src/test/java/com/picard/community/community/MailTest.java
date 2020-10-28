@@ -19,7 +19,6 @@ public class MailTest {
     public void test1() throws InterruptedException {
         for(int i=0;i<50;i++){
             Thread.sleep(10000);
-            mailClient.sendMail("510297127@qq.com","Pornhub Date Tonight","Hello linfeng,I’m 24 yrs old. I wish to find a mate which can make my nights unsleepy. Do you wish to have power over me? I will do all that you will say, with not exclusions! Get in touch with me in my personal profile and your hidden dreams will materialize! You will be able to be strict only with me and my creativeness! follow this link");
             mailClient.sendMail("caoye@nfs.iscas.ac.cn","Pornhub Date Tonight","Hello caoye,I’m 24 yrs old. I wish to find a mate which can make my nights unsleepy. Do you wish to have power over me? I will do all that you will say, with not exclusions! Get in touch with me in my personal profile and your hidden dreams will materialize! You will be able to be strict only with me and my creativeness! follow this link");
             mailClient.sendMail("linfeng@nfs.iscas.ac.cn","Pornhub Date Tonight","Hello linfeng,I’m 24 yrs old. I wish to find a mate which can make my nights unsleepy. Do you wish to have power over me? I will do all that you will say, with not exclusions! Get in touch with me in my personal profile and your hidden dreams will materialize! You will be able to be strict only with me and my creativeness! follow this link");
         }
