@@ -1,8 +1,10 @@
 package com.picard.community.community;
 
 import com.picard.community.community.dao.DiscussPostMapper;
+import com.picard.community.community.dao.LoginTicketMapper;
 import com.picard.community.community.dao.UserMapper;
 import com.picard.community.community.entity.DiscussPost;
+import com.picard.community.community.entity.LoginTicket;
 import com.picard.community.community.entity.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class MapperTest {
     private UserMapper userMapper;
     @Autowired
     private DiscussPostMapper discussPostMapper;
+    @Autowired
+    private LoginTicketMapper loginTicketMapper;
     @Test
     public void testSelectUser(){
         User user = userMapper.selectById(101);
@@ -58,5 +62,27 @@ public class MapperTest {
         }
         int rows = discussPostMapper.selectDiscussPostRows(149);
         System.out.println(rows);
+    }
+    @Test
+    public void testInsertLoginTicket(){
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setTicket("abc");
+        loginTicket.setStatus(0);
+        loginTicket.setExpired(new Date(System.currentTimeMillis()+1000*60*10));
+        loginTicket.setUserId(101);
+        loginTicketMapper.insertLoginTicket(loginTicket);
+    }
+    @Test
+    public void testSelectLoginTicket(){
+        LoginTicket loginTicket = new LoginTicket();
+        loginTicket.setTicket("abc");
+        loginTicket.setStatus(0);
+        loginTicket.setExpired(new Date(System.currentTimeMillis()+1000*60*10));
+        loginTicket.setUserId(101);
+        loginTicketMapper.insertLoginTicket(loginTicket);
+    }
+    @Test
+    public void testUpdateLoginTicket(){
+        loginTicketMapper.updateStatus("abc",1);
     }
 }
