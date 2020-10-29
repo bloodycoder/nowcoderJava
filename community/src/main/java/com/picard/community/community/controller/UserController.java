@@ -22,6 +22,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.http.HttpResponse;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -89,6 +90,22 @@ public class UserController {
             logger.error("读取头像失败:"+e.getMessage());
             e.printStackTrace();
         }
-
     }
+    @RequestMapping(path="/updatepassword",method = RequestMethod.POST)
+    public String updatePassword(Model model,String oldPassword,
+                                 String newPassword1,String newPassword2){
+        User user = hostHolder.getUser();
+        Map<String,Object> map = userService.updatePassword(user.getId(),oldPassword,newPassword1,newPassword2);
+        if(map == null || map.isEmpty()){
+            model.addAttribute("msg","密码修改成功!");
+            model.addAttribute("target","/index");
+            return "/site/operate-result";
+        }else{
+            model.addAttribute("oldPasswordMsg",map.get("oldPasswordMsg"));
+            model.addAttribute("passwordMsg",map.get("passwordMsg"));
+            model.addAttribute("usernameMsg",map.get("usernameMsg"));
+            return "/site/setting";
+        }
+    }
+
 }
