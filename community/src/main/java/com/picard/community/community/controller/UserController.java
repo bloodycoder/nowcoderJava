@@ -1,5 +1,6 @@
 package com.picard.community.community.controller;
 
+import com.picard.community.community.annotation.LoginRequired;
 import com.picard.community.community.entity.User;
 import com.picard.community.community.service.UserService;
 import com.picard.community.community.util.CommunityUtil;
@@ -37,10 +38,12 @@ public class UserController {
     private UserService userService;
     @Autowired
     private HostHolder hostHolder;
+    @LoginRequired
     @RequestMapping(path="/setting",method = RequestMethod.GET)
     public String getSettingPage(){
         return "/site/setting";
     }
+    @LoginRequired
     @RequestMapping(path="/upload",method = RequestMethod.POST)
     public String uploadHeader(MultipartFile headerImage, Model model){
         if(headerImage == null){
