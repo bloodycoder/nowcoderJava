@@ -3,10 +3,13 @@ package com.picard.community.community.controller;
 import com.picard.community.community.entity.DiscussPost;
 import com.picard.community.community.entity.User;
 import com.picard.community.community.service.DiscussPostService;
+import com.picard.community.community.service.UserService;
 import com.picard.community.community.util.CommunityUtil;
 import com.picard.community.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,6 +23,8 @@ public class DiscussPostController {
     private DiscussPostService discussPostService;
     @Autowired
     private HostHolder hostHolder;
+    @Autowired
+    private UserService userService;
     @RequestMapping(path="/add",method= RequestMethod.POST)
     @ResponseBody
     public String addDiscussPost(String title,String content){
@@ -34,5 +39,15 @@ public class DiscussPostController {
         post.setCreateTime(new Date());
         discussPostService.addDiscussPost(post);
         return CommunityUtil.getJSONString(0,"发布成功!");
+    }
+    @RequestMapping(path="/detail/{discussPostId}",method = RequestMethod.GET)
+    public String getDiscussPost(@PathVariable("discussPostId") int discussPostId, Model model){
+        //帖子
+        DiscussPost discussPost = discussPostService.findDiscussPostById(discussPostId);
+        model.addAttribute("post",discussPost);
+        //
+        User user = userService.findUserById(discussPost.getUserId());
+        model.addAttribute("user",user);
+        return "/site/discuss-detail";
     }
 }
