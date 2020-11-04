@@ -2,6 +2,7 @@ package com.picard.community.community.controller;
 
 import com.picard.community.community.annotation.LoginRequired;
 import com.picard.community.community.entity.User;
+import com.picard.community.community.service.LikeService;
 import com.picard.community.community.service.UserService;
 import com.picard.community.community.util.CommunityUtil;
 import com.picard.community.community.util.HostHolder;
@@ -38,6 +39,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private HostHolder hostHolder;
+    @Autowired
+    private LikeService likeService;
     @LoginRequired
     @RequestMapping(path="/setting",method = RequestMethod.GET)
     public String getSettingPage(){
@@ -109,6 +112,18 @@ public class UserController {
             model.addAttribute("usernameMsg",map.get("usernameMsg"));
             return "/site/setting";
         }
+    }
+    @RequestMapping(path="/profile/{userId}",method = RequestMethod.GET)
+    public String getProfilePage(@PathVariable("userId")int userId, Model model){
+        User user = userService.findUserById(userId);
+        if(user == null){
+            throw new RuntimeException(String.format("用户%d不存在",userId));
+        }
+        //
+        model.addAttribute("user",user);
+        int likeCount = likeService.findUserLikeCount(userId);
+        model.addAttribute("likeCount",likeCount);
+        return "/site/profile";
     }
 
 }
