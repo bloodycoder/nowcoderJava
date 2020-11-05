@@ -3,6 +3,7 @@ package com.picard.community.community.dao;
 import com.picard.community.community.entity.LoginTicket;
 import org.apache.ibatis.annotations.*;
 
+@Deprecated
 @Mapper
 public interface LoginTicketMapper {
     @Insert({
