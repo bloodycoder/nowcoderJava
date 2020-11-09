@@ -44,7 +44,7 @@ public class MessageService {
     }
     //最新通知
     public Message findLatestNotice(int userId,String topic){
-        return messageMapper.selctLastestNotice(userId,topic);
+        return messageMapper.selectLastestNotice(userId,topic);
     }
     public int findNoticeCount(int userId,String topic){
         return messageMapper.selectNoticeCount(userId,topic);

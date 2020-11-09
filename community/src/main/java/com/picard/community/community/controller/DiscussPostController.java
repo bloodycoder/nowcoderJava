@@ -1,9 +1,7 @@
 package com.picard.community.community.controller;
 
-import com.picard.community.community.entity.Comment;
-import com.picard.community.community.entity.DiscussPost;
-import com.picard.community.community.entity.Page;
-import com.picard.community.community.entity.User;
+import com.picard.community.community.entity.*;
+import com.picard.community.community.event.EventProducer;
 import com.picard.community.community.service.CommentService;
 import com.picard.community.community.service.DiscussPostService;
 import com.picard.community.community.service.LikeService;
@@ -34,6 +32,8 @@ public class DiscussPostController implements CommunityConstant {
     private CommentService commentService;
     @Autowired
     private LikeService likeService;
+    @Autowired
+    private EventProducer eventProducer;
     @RequestMapping(path="/add",method= RequestMethod.POST)
     @ResponseBody
     public String addDiscussPost(String title,String content){
@@ -47,6 +47,14 @@ public class DiscussPostController implements CommunityConstant {
         post.setContent(content);
         post.setCreateTime(new Date());
         discussPostService.addDiscussPost(post);
+        //触发发帖事件
+        Event event = new Event()
+                .setTopic(TOPIC_PUBLISH)
+                .setUserId(user.getId())
+                .setEntityType(ENTITY_TYPE_POST)
+                .setEntityId(post.getId());
+        eventProducer.fireEvent(event);
+
         return CommunityUtil.getJSONString(0,"发布成功!");
     }
     @RequestMapping(path="/detail/{discussPostId}",method = RequestMethod.GET)

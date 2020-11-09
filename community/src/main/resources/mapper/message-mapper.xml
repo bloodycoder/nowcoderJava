@@ -63,7 +63,7 @@
             #{id}
         </foreach>
     </update>
-    <select id="selctLastestNotice" resultType="Message">
+    <select id="selectLastestNotice" resultType="Message">
         select<include refid="selectFields"></include>
         from message
         where id in(
