@@ -24,6 +24,8 @@ public class ServiceLogAspect {
     public void before(JoinPoint joinPoint){
         //用户[ip地址] 在 dates 访问了 什么方法。
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
+        if(servletRequestAttributes == null)
+            return;
         HttpServletRequest request = servletRequestAttributes.getRequest();
         String ip = request.getRemoteHost();
         String now = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
