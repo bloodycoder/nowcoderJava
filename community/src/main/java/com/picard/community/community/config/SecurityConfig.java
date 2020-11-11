@@ -52,9 +52,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                         AUTHORITY_MODERATOR
                 )
                 .antMatchers(
-                        "/discuss/wonderful"
+                        "/discuss/wonderful",
+                        "/data/**"
                         ).hasAnyAuthority(
-                        AUTHORITY_ADMIN
+                        AUTHORITY_ADMIN,
+                        AUTHORITY_MODERATOR
                 )
                 .anyRequest().permitAll()
                 .and().csrf().disable();
