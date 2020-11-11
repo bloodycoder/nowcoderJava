@@ -31,9 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
         http.authorizeRequests()
                 .antMatchers(
                         "/user/setting",
-                        "user/upload",
+                        "/user/upload",
                         "/discuss/add",
-                        "comment/add/**",
+                        "/comment/add/**",
                         "/letter/**",
                         "/notice/**",
                         "/like",
@@ -44,6 +44,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                         AUTHORITY_ADMIN,
                         AUTHORITY_USER,
                         AUTHORITY_MODERATOR
+                )
+                .antMatchers(
+                        "/discuss/top",
+                        "/discuss/wonderful"
+                ).hasAnyAuthority(
+                        AUTHORITY_MODERATOR
+                )
+                .antMatchers(
+                        "/discuss/wonderful"
+                        ).hasAnyAuthority(
+                        AUTHORITY_ADMIN
                 )
                 .anyRequest().permitAll()
                 .and().csrf().disable();
